@@ -3,7 +3,7 @@
 Creado a partir del [tutorial de Articulated Robotics](https://youtu.be/J02jEKawE5U). 
 El cual esta basado en el demo_2 de [ros2_control_demos](https://control.ros.org/humble/doc/ros2_control_demos/example_2/doc/userdoc.html).
 
-Se presenta el paquete de ROS2 y el código de arduino para controlar un servo desde ROS2 a traves del puerto de comunicación serial. 
+Se presenta el paquete de ROS 2 y el código de arduino para controlar un servo desde ROS 2 a traves del puerto de comunicación serial. 
 
 ## Requisitos
 
@@ -13,42 +13,72 @@ Se necesita instalar la siguiente libreria para poder compilar el paquete
 sudo apt install libserial-dev
 ```
 
-## Por ahora no es necesario esto: 
+## Compilación
 
-En WSL necesitaremos instalar [esto](https://learn.microsoft.com/en-us/windows/wsl/connect-usb). O tendremos que generar una comunicación serial falsa de la siguiente forma
+Para compilar los dos paquetes usaremos colcon, debemos estar parado en el directorio _workspace_, y ejecutamos
 
 ```bash
-socat -d -d pty,rawer,echo=0 pty,rawer,echo=0
+colcon build
 ```
 
-En mi caso aparecieron los puertos seriales `/dev/pts/3` y `/dev/pts/4`... los cuales pueden ser usados en el archivo de configuración de ros2_control.
+## Corriendo el ejemplo del servo
 
+Para correr el ejemplo deberemos instalar unos paquetes:
 
-## Conexión por TCP al serial de Windows
+```bash
+sudo apt install ros-humble-moveit ros-humble-moveit-resources -y
+```
 
+Con esta instalación, se instalarán también los paquetes adicionales listados a continuación: 
 
-Para conectarnos por TCP a un serial de Windows desde nuestro Ubuntu WSL, vamos a usar dos programas, uno en windows y otro en linux, 
+```bash
+ros-humble-eigen-stl-containers
+ros-humble-geometric-shapes
+ros-humble-launch-param-builder
+ros-humble-moveit-common
+ros-humble-moveit-configs-utils
+ros-humble-moveit-core
+ros-humble-moveit-kinematics
+ros-humble-moveit-msgs
+ros-humble-moveit-planners
+ros-humble-moveit-planners-ompl
+ros-humble-moveit-plugins
+ros-humble-moveit-ros
+ros-humble-moveit-ros-benchmarks
+ros-humble-moveit-ros-move-group
+ros-humble-moveit-ros-occupancy-map-monitor
+ros-humble-moveit-ros-planning
+ros-humble-moveit-ros-planning-interface
+ros-humble-moveit-ros-robot-interaction
+ros-humble-moveit-ros-visualization
+ros-humble-moveit-ros-warehouse
+ros-humble-moveit-setup-app-plugins
+ros-humble-moveit-setup-assistant
+ros-humble-moveit-setup-controllers
+ros-humble-moveit-setup-core-plugins
+ros-humble-moveit-setup-framework
+ros-humble-moveit-setup-srdf-plugins
+ros-humble-moveit-simple-controller-manager
+ros-humble-object-recognition-msgs
+ros-humble-octomap
+ros-humble-octomap-msgs
+ros-humble-pilz-industrial-motion-planner
+ros-humble-random-numbers
+ros-humble-ruckig
+ros-humble-srdfdom
+ros-humble-urdfdom-py
+ros-humble-warehouse-ros
 
-En windows podremos usar:
+ros-humble-moveit-resources-fanuc-description
+ros-humble-moveit-resources-fanuc-moveit-config
+ros-humble-moveit-resources-panda-description
+ros-humble-moveit-resources-panda-moveit-config
+ros-humble-moveit-resources-pr2-description
+```
 
-- [TCPCOM32](https://sourceforge.net/projects/tcpcom32/), se instala y se configura como server. 
-- [com0com](https://com0com.sourceforge.net/)
+Una vez instalado, vamos a correr el ejemplo con el siguiente codigo:
 
-más referencias [aquí](https://superuser.com/questions/54723/any-free-application-to-redirect-serial-communication-to-tcp-ip)
-
-En linux podremos usar multiples opciones:
-
-- [ser2net](https://manpages.ubuntu.com/manpages/jammy/en/man8/ser2net.8.html)
-
-    ```bash
-    sudo apt-get install ser2net
-    ```
-
-- [socat](https://www.digi.com/support/knowledge-base/serial-to-ethernet-or-wifi-bridge-with-linux-socat) ([ref-2](http://www.dest-unreach.org/socat/doc/socat-ttyovertcp.txt))
-
-[REVISAR](https://stackoverflow.com/questions/484740/converting-serial-port-data-to-tcp-ip-in-a-linux-environment)
-
-Como vamos a estar trabajando con Arduino, la configuración serial de este es: 
-
-**[SERIAL_8N1](https://www.arduino.cc/reference/en/language/functions/communication/serial/begin/) :**
-Comunicación serial de 8 Bits, Sin paridad (N), con un bit de parada.
+```bash
+source install/setup.bash
+ros2 launch servo_hardware_moveit_config mock.launch.py
+```

@@ -135,6 +135,9 @@ hardware_interface::CallbackReturn ServoArduinoHardware::on_configure(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
   RCLCPP_INFO(rclcpp::get_logger("ServoArduinoHardware"), "Configuring ...please wait...");
+  //RCLCPP_INFO(rclcpp::get_logger("ServoArduinoHardware"), std::string(cfg_.device));
+  //RCLCPP_INFO(rclcpp::get_logger("ServoArduinoHardware"), std::string(cfg_.baud_rate));
+  //RCLCPP_INFO(rclcpp::get_logger("ServoArduinoHardware"), std::string(cfg_.timeout_ms));
   if (comms_.connected())
   {
     comms_.disconnect();
@@ -193,13 +196,16 @@ hardware_interface::return_type ServoArduinoHardware::read(
     return hardware_interface::return_type::ERROR;
   }
 
-  int dummy = 0;
-  comms_.read_encoder_values(joint1_.enc, dummy);
-
+  double pos_prev = joint1_.pos;
   double delta_seconds = period.seconds();
 
-  double pos_prev = joint1_.pos;
-  joint1_.pos = joint1_.calc_enc_angle();
+  double cmd_degree = joint1_.cmd*57.296 + 90;
+  int pos_degree = 0;
+  comms_.send_cmd_receive_pos(cmd_degree, pos_degree);
+
+  // RCLCPP_INFO(rclcpp::get_logger("ServoArduinoHardware"), "COMANDO: '%f'", cmd_degree);
+
+  joint1_.pos = (pos_degree-90) / 57.296; 
   joint1_.vel = (joint1_.pos - pos_prev) / delta_seconds;
 
   return hardware_interface::return_type::OK;
@@ -213,9 +219,9 @@ hardware_interface::return_type servo_hardware ::ServoArduinoHardware::write(
     return hardware_interface::return_type::ERROR;
   }
 
-  int motor_l_counts_per_loop = joint1_.cmd / joint1_.rads_per_count / cfg_.loop_rate;
+  /*int motor_l_counts_per_loop = joint1_.cmd / joint1_.rads_per_count / cfg_.loop_rate;
   comms_.set_motor_values(motor_l_counts_per_loop, 0);
-  joint1_.pos = joint1_.cmd;
+  joint1_.pos = joint1_.cmd;*/
   return hardware_interface::return_type::OK;
 }
 
