@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="servo">
+    
+
+    <!-- Import panda urdf file -->
+    <xacro:include filename="$(find servo_hardware)/urdf/servo.description.xacro" />
+
+    <!-- Import servo ros2_control description -->
+    <xacro:include filename="servo.ros2_control.xacro" />
+    <xacro:servo_ros2_control 
+        name="servo" 
+        plugin="mock_components/GenericSystem" 
+        prefix="" 
+    />
+    
+</robot>

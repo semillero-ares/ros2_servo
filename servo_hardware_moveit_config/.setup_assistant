@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: "servo_hardware"
+    relative_path: urdf/servo.description.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/servo.srdf
+  CONFIG:
+    author_name: author_name
+    author_email: ares@davinsony.com
+    generated_timestamp: 1694796742

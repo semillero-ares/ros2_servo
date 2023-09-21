@@ -1,0 +1,16 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 10  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    servo_controller:
+      type: forward_command_controller/ForwardCommandController
+      # http://docs.ros.org/en/jade/api/position_controllers/html/namespaceposition__controllers.html
+
+servo_controller:
+  ros__parameters:
+    joints:
+     - servo_joint
+    interface_name: position
