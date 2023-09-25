@@ -93,5 +93,5 @@ ros2 launch servo_hardware_moveit_config demo.launch.py
 y en otro terminal 
 
 ```bash
-socat -d -d pty,rawer,echo=0,link=$HOME/servo  /dev/ttyACM0,b115200,raw
+socat -d -d pty,rawer,echo=0,link=/tmp/servo  /dev/ttyACM0,b115200,raw
 ```
