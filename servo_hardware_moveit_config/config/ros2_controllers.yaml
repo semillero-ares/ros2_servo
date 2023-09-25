@@ -12,6 +12,7 @@ controller_manager:
 
 servo_controller:
   ros__parameters:
+    interface_name: position
     command_interfaces:
       - position
     state_interfaces:
