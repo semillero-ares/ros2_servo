@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Usando el asistente de Moveit - Tutorial para ROS 2 Servo</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Usando el asistente de Moveit";
+        var mkdocs_page_input_path = "Using Moveit Assitant.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Tutorial para ROS 2 Servo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" title="Escriba el término de búsqueda aquí" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegación">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Welcome to MkDocs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Comunicaci%C3%B3n%20serial/">Comunicación serial</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Usando el asistente de Moveit</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#instalando-mamba-para-gestionar-los-ambientes-virtuales">Instalando mamba para gestionar los ambientes virtuales</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Menú de navegación en móvil">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Tutorial para ROS 2 Servo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Documentos"></a></li>
+      <li class="breadcrumb-item active">Usando el asistente de Moveit</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="usando-el-asistente-de-moveit">Usando el asistente de Moveit</h1>
+<p>Para poder usar Moveit2 debemos crear unos archivos de configuración necesarios para correr moveit. Estos archivos se pueden generar en el Moveit-Assitant, lamentablemente este asistente solo está disponible en ROS1, por lo que tendremos que instalarlo. Para hacer la instalación de ROS1 en nuestro Ubuntu 22.04 y no tener problemas con nuestra instalación de ROS2, lo instalaremos en una ambiente virtual creado con mamba (<em>una versión más rápide de Anaconda</em>). </p>
+<h2 id="instalando-mamba-para-gestionar-los-ambientes-virtuales">Instalando mamba para gestionar los ambientes virtuales</h2>
+<p>Inicialmente tendremos que <a href="(https://mamba.readthedocs.io/en/latest/mamba-installation.html)">instalar mamba</a>. Tomado de <a href="https://github.com/conda-forge/miniforge#mambaforge">aquí</a>, ejecutaremos los siguientes comandos:</p>
+<pre><code class="language-bash">curl -L -O &quot;https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh&quot;
+bash Mambaforge-Linux-x86_64.sh
+</code></pre>
+<p>Una vez instalado vamos a ir a la carpeta <code>mambaforge/bin</code> y ejecutaremos los siguientes comandos para activar mamba:</p>
+<pre><code class="language-bash">./conda init
+./conda config --set auto_activate_base false
+</code></pre>
+<p>Reiniciamos el terminal y ahora podemos continuar con la instalación de ROS1</p>
+<h1 id="la-instalacion-de-ros1-en-un-ambiente-virtual">La instalación de ROS1 en un ambiente virtual</h1>
+<p><em>Sección inspirada en la documentación de <a href="https://robostack.github.io/GettingStarted.html">RoboStack</a></em></p>
+<p>Inicialmente vamos a crear el ambiente virtual, como la versión de ROS1 que vamos a instalar es la noetic, creare el ambiente virtual con el siguiente comando:</p>
+<pre><code class="language-bash">mamba create -n noetic_env 
+mamba init
+</code></pre>
+<p>Luego de reiniciar el terminal, activaremos el ambiente virtual:</p>
+<pre><code class="language-bash">mamba activate noetic_env
+</code></pre>
+<p>Prepararemos el ambiente para instalar ROS1 de los repositorios correctos:</p>
+<pre><code class="language-bash"># this adds the conda-forge channel to the new created environment configuration 
+conda config --env --add channels conda-forge
+# and the robostack channel
+conda config --env --add channels robostack-staging
+# remove the defaults channel just in case, this might return an error if it is not in the list which is ok
+conda config --env --remove channels defaults
+</code></pre>
+<p>El último comando puede generar un error por que algunas veces no existe, entonces no puede ser removido. </p>
+<p>Ya tenemos entonces el ambiente listo para instalar ROS1, que instalaremos con el siguiente comando:</p>
+<pre><code class="language-bash"># Install ros-noetic into the environment (ROS1)
+mamba install ros-noetic-desktop
+# Install tools for local development
+mamba install compilers cmake pkg-config make ninja colcon-common-extensions catkin_tools
+</code></pre>
+<p>Para poder usar ROS1, debemos desactivar ROS2 del archivo <code>~/.bashrc</code>, esto lo haremos comentando la linea mostrada a continuación:</p>
+<pre><code class="language-bash"># source /opt/ros/humble/setup.bash
+</code></pre>
+<p>y reiniciando el terminal. </p>
+<h3 id="probando-la-instalacion">Probando la instalación</h3>
+<p>En dos terminales haremos lo siguiente:</p>
+<ol>
+<li>
+<p>En el terminal 1, activaremos el ambiente y luego correremos el comando <code>roscore</code> que inicia el proceso principal de ROS1:</p>
+<p><code>bash
+mamba activate noetic_env
+roscore</code></p>
+</li>
+<li>
+<p>En el terminal 2, activaremos el ambiente y correremos el comando de rviz:</p>
+<p><code>bash
+mamba activate noetic_env
+rviz</code>  </p>
+</li>
+</ol>
+<h2 id="instalando-moveit-para-ros1">Instalando Moveit para ROS1</h2>
+<p>Estando dentro del ambiente virtual (<em>noetic_env</em>), vamos a instalar moveit con el siguiente comando:</p>
+<pre><code class="language-bash">mamba install ros-noetic-moveit 
+</code></pre>
+<p>Una vez instalado podremos correr el assistente para moveit con el siguiente comando: </p>
+<pre><code class="language-bash">roslaunch moveit_setup_assistant setup_assistant.launch
+</code></pre>
+<h2 id="usando-el-asistente-de-moveit_1">Usando el asistente de MoveIt</h2>
+<p>https://www.youtube.com/watch?v=EosEikbZhiM</p>
+<p>Para usar el asistente necesitaremos un archivo "URDF" :</p>
+<pre><code class="language-bash">ros2 topic echo /robot_description -l 1000000000 &gt; data.urdf 
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Navegación de pie de página">
+        <a href="../Comunicaci%C3%B3n%20serial/" class="btn btn-neutral float-left" title="Comunicación serial"><span class="icon icon-circle-arrow-left"></span> Anterior</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Construído con <a href="https://www.mkdocs.org/">MkDocs</a> usando <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provisto por <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versiones">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../Comunicaci%C3%B3n%20serial/" style="color: #fcfcfc">&laquo; Anterior</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../js/mathjax.js"></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
