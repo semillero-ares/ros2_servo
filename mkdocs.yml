@@ -1,5 +1,11 @@
 site_name: Tutorial para ROS 2 Servo
 
+copyright: >
+  Derechos de autor &copy; 2023 
+  <a href="https://github.com/Ph0n1x0">Luis Miguel Loaiza</a>, 
+  <a href="https://github.com/David-8a">David Ochoa</a>, 
+  <a href="https://github.com/davinsony">Davinson Castaño-Cano</a>.
+
 theme:
   name: readthedocs
   locale: es
