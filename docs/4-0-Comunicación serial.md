@@ -1,4 +1,4 @@
-## Comunicación serial en WSL
+# 4. Comunicación serial en WSL
 
 En WSL necesitaremos instalar [esto](https://learn.microsoft.com/en-us/windows/wsl/connect-usb). O tendremos que generar una comunicación serial falsa de la siguiente forma
 
