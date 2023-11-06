@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Comunicación serial - Tutorial para ROS 2 Servo</title>
+    <title>10. Servo hardware - Tutorial para ROS 2 Servo</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Comunicaci\u00f3n serial";
-        var mkdocs_page_input_path = "Comunicaci\u00f3n serial.md";
+        var mkdocs_page_name = "10. Servo hardware";
+        var mkdocs_page_input_path = "5-4-ServoHardware y arduino.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -41,13 +41,49 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">Welcome to MkDocs</a>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../1-0-Ros2%20installation/">1. Ros2 Installation for Ubuntu</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../2-0-Requisitos/">2. Requisitos software</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../3-0-primerosPasosRos/">3. Primeros pasos con ROS</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../4-0-Comunicaci%C3%B3n%20serial/">4. Comunicación serial en WSL</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../5-0-Servo/">6. Servo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../5-1-ServoXacros/">7. Servo Xacros</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../5-2-ServoControllers/">8. Servo Controllers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../5-3-ServoMoveIt/">9. Servo Moveit</a>
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Comunicación serial</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">10. Servo hardware</a>
     <ul class="current">
     </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../5-5-ServoLaunch/">11. Servo launch</a>
                 </li>
               </ul>
               <ul>
@@ -68,7 +104,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>Comunicación serial</li>
+      <li>10. Servo hardware</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -77,40 +113,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="comunicacion-serial-en-wsl">Comunicación serial en WSL</h2>
-<p>En WSL necesitaremos instalar <a href="https://learn.microsoft.com/en-us/windows/wsl/connect-usb">esto</a>. O tendremos que generar una comunicación serial falsa de la siguiente forma</p>
-<pre><code class="language-bash">socat -d -d pty,rawer,echo=0 pty,rawer,echo=0
-</code></pre>
-<p>En mi caso aparecieron los puertos seriales <code>/dev/pts/3</code> y <code>/dev/pts/4</code>... los cuales pueden ser usados en el archivo de configuración de ros2_control.</p>
-<h2 id="conexion-por-tcp-al-serial-de-windows">Conexión por TCP al serial de Windows</h2>
-<p>Para conectarnos por TCP a un serial de Windows desde nuestro Ubuntu WSL, vamos a usar dos programas, uno en windows y otro en linux, </p>
-<p>En windows podremos usar:</p>
-<ul>
-<li><a href="https://sourceforge.net/projects/tcpcom32/">TCPCOM32</a>, se instala y se configura como server. </li>
-<li><a href="https://com0com.sourceforge.net/">com0com</a></li>
-</ul>
-<p>más referencias <a href="https://superuser.com/questions/54723/any-free-application-to-redirect-serial-communication-to-tcp-ip">aquí</a></p>
-<p>En linux podremos usar multiples opciones:</p>
-<ul>
-<li>
-<p><a href="https://manpages.ubuntu.com/manpages/jammy/en/man8/ser2net.8.html">ser2net</a></p>
-<p><code>bash
-sudo apt-get install ser2net</code></p>
-</li>
-<li>
-<p><a href="https://www.digi.com/support/knowledge-base/serial-to-ethernet-or-wifi-bridge-with-linux-socat">socat</a> (<a href="http://www.dest-unreach.org/socat/doc/socat-ttyovertcp.txt">ref-2</a>)</p>
-</li>
-</ul>
-<p><a href="https://stackoverflow.com/questions/484740/converting-serial-port-data-to-tcp-ip-in-a-linux-environment">REVISAR</a></p>
-<p>Como vamos a estar trabajando con Arduino, la configuración serial de este es: </p>
-<p><strong><a href="https://www.arduino.cc/reference/en/language/functions/communication/serial/begin/">SERIAL_8N1</a> :</strong>
-Comunicación serial de 8 Bits, Sin paridad (N), con un bit de parada.</p>
+                <h1 id="10-servo-hardware">10. Servo hardware</h1>
+<p>Harware y arduino de servo </p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href=".." class="btn btn-neutral float-left" title="Welcome to MkDocs"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../Using%20Moveit%20Assitant/" class="btn btn-neutral float-right" title="Usando el asistente de Moveit">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../5-3-ServoMoveIt/" class="btn btn-neutral float-left" title="9. Servo Moveit"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../5-5-ServoLaunch/" class="btn btn-neutral float-right" title="11. Servo launch">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -135,10 +145,10 @@ Comunicación serial de 8 Bits, Sin paridad (N), con un bit de parada.</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../5-3-ServoMoveIt/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../Using%20Moveit%20Assitant/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../5-5-ServoLaunch/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

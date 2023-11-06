@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Usando el asistente de Moveit - Tutorial para ROS 2 Servo</title>
+    <title>3. Primeros pasos con ROS - Tutorial para ROS 2 Servo</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Usando el asistente de Moveit";
-        var mkdocs_page_input_path = "Using Moveit Assitant.md";
+        var mkdocs_page_name = "3. Primeros pasos con ROS";
+        var mkdocs_page_input_path = "3-0-primerosPasosRos.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -52,8 +52,14 @@
                 <li class="toctree-l1"><a class="reference internal" href="../2-0-Requisitos/">2. Requisitos software</a>
                 </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../3-0-primerosPasosRos/">3. Primeros pasos con ROS</a>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">3. Primeros pasos con ROS</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#31-creando-un-paquete-en-ros">3.1. Creando un paquete en ROS</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#32-clonar-un-paquete-de-github">3.2. Clonar un paquete de Github</a>
+    </li>
+    </ul>
                 </li>
               </ul>
               <ul>
@@ -84,12 +90,8 @@
                 <li class="toctree-l1"><a class="reference internal" href="../5-5-ServoLaunch/">11. Servo launch</a>
                 </li>
               </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Usando el asistente de Moveit</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#instalando-mamba-para-gestionar-los-ambientes-virtuales">Instalando mamba para gestionar los ambientes virtuales</a>
-    </li>
-    </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Using%20Moveit%20Assitant/">Usando el asistente de Moveit</a>
                 </li>
               </ul>
       </div>
@@ -106,7 +108,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>Usando el asistente de Moveit</li>
+      <li>3. Primeros pasos con ROS</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -115,79 +117,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="usando-el-asistente-de-moveit">Usando el asistente de Moveit</h1>
-<p>Para poder usar Moveit2 debemos crear unos archivos de configuración necesarios para correr moveit. Estos archivos se pueden generar en el Moveit-Assitant, lamentablemente este asistente solo está disponible en ROS1, por lo que tendremos que instalarlo. Para hacer la instalación de ROS1 en nuestro Ubuntu 22.04 y no tener problemas con nuestra instalación de ROS2, lo instalaremos en una ambiente virtual creado con mamba (<em>una versión más rápide de Anaconda</em>). </p>
-<h2 id="instalando-mamba-para-gestionar-los-ambientes-virtuales">Instalando mamba para gestionar los ambientes virtuales</h2>
-<p>Inicialmente tendremos que <a href="(https://mamba.readthedocs.io/en/latest/mamba-installation.html)">instalar mamba</a>. Tomado de <a href="https://github.com/conda-forge/miniforge#mambaforge">aquí</a>, ejecutaremos los siguientes comandos:</p>
-<pre><code class="language-bash">curl -L -O &quot;https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh&quot;
-bash Mambaforge-Linux-x86_64.sh
-</code></pre>
-<p>Una vez instalado vamos a ir a la carpeta <code>mambaforge/bin</code> y ejecutaremos los siguientes comandos para activar mamba:</p>
-<pre><code class="language-bash">./conda init
-./conda config --set auto_activate_base false
-</code></pre>
-<p>Reiniciamos el terminal y ahora podemos continuar con la instalación de ROS1</p>
-<h1 id="la-instalacion-de-ros1-en-un-ambiente-virtual">La instalación de ROS1 en un ambiente virtual</h1>
-<p><em>Sección inspirada en la documentación de <a href="https://robostack.github.io/GettingStarted.html">RoboStack</a></em></p>
-<p>Inicialmente vamos a crear el ambiente virtual, como la versión de ROS1 que vamos a instalar es la noetic, creare el ambiente virtual con el siguiente comando:</p>
-<pre><code class="language-bash">mamba create -n noetic_env 
-mamba init
-</code></pre>
-<p>Luego de reiniciar el terminal, activaremos el ambiente virtual:</p>
-<pre><code class="language-bash">mamba activate noetic_env
-</code></pre>
-<p>Prepararemos el ambiente para instalar ROS1 de los repositorios correctos:</p>
-<pre><code class="language-bash"># this adds the conda-forge channel to the new created environment configuration 
-conda config --env --add channels conda-forge
-# and the robostack channel
-conda config --env --add channels robostack-staging
-# remove the defaults channel just in case, this might return an error if it is not in the list which is ok
-conda config --env --remove channels defaults
-</code></pre>
-<p>El último comando puede generar un error por que algunas veces no existe, entonces no puede ser removido. </p>
-<p>Ya tenemos entonces el ambiente listo para instalar ROS1, que instalaremos con el siguiente comando:</p>
-<pre><code class="language-bash"># Install ros-noetic into the environment (ROS1)
-mamba install ros-noetic-desktop
-# Install tools for local development
-mamba install compilers cmake pkg-config make ninja colcon-common-extensions catkin_tools
-</code></pre>
-<p>Para poder usar ROS1, debemos desactivar ROS2 del archivo <code>~/.bashrc</code>, esto lo haremos comentando la linea mostrada a continuación:</p>
-<pre><code class="language-bash"># source /opt/ros/humble/setup.bash
-</code></pre>
-<p>y reiniciando el terminal. </p>
-<h3 id="probando-la-instalacion">Probando la instalación</h3>
-<p>En dos terminales haremos lo siguiente:</p>
+                <h1 id="3-primeros-pasos-con-ros">3. Primeros pasos con ROS</h1>
+<h2 id="31-creando-un-paquete-en-ros">3.1. Creando un paquete en ROS</h2>
+<p>Todo el desarrollo del proyecto será realizado en la plataforma <em>ROS</em>, en el caso de nunca haber trabajado con ROS, se recomienda seguir los tutoriales disponibles en la <a href="https://docs.ros.org/en/humble/Tutorials.html">Documentación</a> o ver el siguiente <a href="https://www.youtube.com/watch?v=Gg25GfA456o&amp;t=2336s">video</a> para obtener conceptos básicos de esta herramienta. </p>
+<p>Cuando se trabaja en ROS, básicamente se tiene una carpeta global llamada <em>Workspace</em> en la que se encuentran varias carpetas pero la más importante es una llamada <em>src</em>, allí se encuentran a su vez más carpetas conocidas como <em>packages</em> o paquetes, estos paquetes contienen todos los scripts necesarios para realizar una tarea. Por ejemplo, podemos tener un package para solamente visualizar el robot en <em>rviz</em>, o para moverlo en <em>gazebo</em>; es decir, el número de paquetes depende directamente del desarrollador. </p>
+<p>Para crear un paquete se puede utilizar un propio comando de ubuntu <code>ros2 pkg create my_first_package ...</code> estos paquetes pueden crearse ya sea en <em>Python</em> o en <em>C++</em>, esto dependerá del desarrollador; además, se deben especificar las dependecias del paquete para no ocasionar ningún error; sin embargo, en el caso de no especificarlas completamente, se pueden añadir después sin ningún problema. En este orden de ideas para comenzar con la creacion de todo se seguirían los siguientes pasos:</p>
 <ol>
-<li>
-<p>En el terminal 1, activaremos el ambiente y luego correremos el comando <code>roscore</code> que inicia el proceso principal de ROS1:</p>
-<p><code>bash
-mamba activate noetic_env
-roscore</code></p>
-</li>
-<li>
-<p>En el terminal 2, activaremos el ambiente y correremos el comando de rviz:</p>
-<p><code>bash
-mamba activate noetic_env
-rviz</code>  </p>
-</li>
+<li>Crear Workspace <code>mkdir robot_ws</code> </li>
+<li>Crear carpeta src <code>cd robot_ws</code>  <code>mkdir src</code>  <code>cd src</code> </li>
+<li>Crear paquete <code>ros2 pkg create my_first_package --build-type ament_python --dependencies rclpy</code></li>
 </ol>
-<h2 id="instalando-moveit-para-ros1">Instalando Moveit para ROS1</h2>
-<p>Estando dentro del ambiente virtual (<em>noetic_env</em>), vamos a instalar moveit con el siguiente comando:</p>
-<pre><code class="language-bash">mamba install ros-noetic-moveit 
-</code></pre>
-<p>Una vez instalado podremos correr el assistente para moveit con el siguiente comando: </p>
-<pre><code class="language-bash">roslaunch moveit_setup_assistant setup_assistant.launch
-</code></pre>
-<h2 id="usando-el-asistente-de-moveit_1">Usando el asistente de MoveIt</h2>
-<p>https://www.youtube.com/watch?v=EosEikbZhiM</p>
-<p>Para usar el asistente necesitaremos un archivo "URDF" :</p>
-<pre><code class="language-bash">ros2 topic echo /robot_description -l 1000000000 &gt; data.urdf 
-</code></pre>
+<p>Con esto ya tendrías el paquete creado, sería un paquete vacío hasta el momento. Lo siguiente sería compilar el paquete, al compilarlo se crearán varias carpetas en el workspace: <em>log</em>, <em>install</em> y <em>build</em>, para compilar basta con escribir el comando <code>colcon build</code>, en el caso de no tenerlo instalado simplemente sigue el comando que te recomeinda la terminal de ubuntu. Cabe resaltar que todo esto puedes hacerlo desde la terminal nativa de WSL o para mas facilidad desde <em>Visual Studio Code</em> al abrir una de tipo <em>Ubuntu(WSL)</em>.</p>
+<h2 id="32-clonar-un-paquete-de-github">3.2. Clonar un paquete de Github</h2>
+<p>A pesar de que el proceso anterior no sea tan tedioso, otra opción para crear un paquete puede ser utilizando una plantilla de Github y adaptarla a tus necesidades. Para esto basta con seguir los siguientes pasos: </p>
+<ol>
+<li>Crear Workspace <code>mkdir robot_ws</code> </li>
+<li>Crear carpeta src <code>cd robot_ws</code> <code>mkdir src</code> <code>cd src</code> </li>
+<li>Clonar <code>git clone https://github.com/Ph0n1x0/my_bot.git</code>, esta plantilla es la utilizada en el <a href="https://www.youtube.com/watch?v=OWeLUSzxMsw&amp;list=PLunhqkrRNRhYAffV8JDiFOatQXuU-NnxT">canal de referencia</a> previamente mencionado.</li>
+</ol>
+<p>Con esto ya tendrías una plantilla lista para modificar. </p>
+<p>Es importante mencionar que cada que cambies script del paquete debes usar el comando <code>colcon build</code> y <code>source install/setup.bash</code></p>
+<p><strong>TIP:</strong> Si utilizas el comando <code>colcon build  --symlink-install</code> compilará automaticamente los cambios en los scripts, solamente <em>NO</em> compilará cuando crees nuevos documentos o archivos.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../5-5-ServoLaunch/" class="btn btn-neutral float-left" title="11. Servo launch"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../2-0-Requisitos/" class="btn btn-neutral float-left" title="2. Requisitos software"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../4-0-Comunicaci%C3%B3n%20serial/" class="btn btn-neutral float-right" title="4. Comunicación serial en WSL">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -212,8 +168,10 @@ rviz</code>  </p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../5-5-ServoLaunch/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../2-0-Requisitos/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
+    
+      <span><a href="../4-0-Comunicaci%C3%B3n%20serial/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

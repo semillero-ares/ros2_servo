@@ -12,7 +12,7 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Welcome to MkDocs";
+        var mkdocs_page_name = "Home";
         var mkdocs_page_input_path = "index.md";
         var mkdocs_page_url = null;
       </script>
@@ -41,17 +41,49 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href=".">Welcome to MkDocs</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href=".">Home</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#commands">Commands</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#project-layout">Project layout</a>
-    </li>
     </ul>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="Comunicaci%C3%B3n%20serial/">Comunicación serial</a>
+                <li class="toctree-l1"><a class="reference internal" href="1-0-Ros2%20installation/">1. Ros2 Installation for Ubuntu</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="2-0-Requisitos/">2. Requisitos software</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="3-0-primerosPasosRos/">3. Primeros pasos con ROS</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="4-0-Comunicaci%C3%B3n%20serial/">4. Comunicación serial en WSL</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="5-0-Servo/">6. Servo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="5-1-ServoXacros/">7. Servo Xacros</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="5-2-ServoControllers/">8. Servo Controllers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="5-3-ServoMoveIt/">9. Servo Moveit</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="5-4-ServoHardware%20y%20arduino/">10. Servo hardware</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="5-5-ServoLaunch/">11. Servo launch</a>
                 </li>
               </ul>
               <ul>
@@ -72,7 +104,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>Welcome to MkDocs</li>
+      <li>Home</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -81,26 +113,49 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="welcome-to-mkdocs">Welcome to MkDocs</h1>
-<p>For full documentation visit <a href="https://www.mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands</h2>
-<ul>
-<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
-<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
-<li><code>mkdocs build</code> - Build the documentation site.</li>
-<li><code>mkdocs -h</code> - Print help message and exit. hola</li>
-</ul>
-<h2 id="project-layout">Project layout</h2>
-<pre><code>mkdocs.yml    # The configuration file.
-docs/
-    index.md  # The documentation homepage.
-    ...       # Other markdown pages, images and other files.
-</code></pre>
+                <h2 id="brazo-robotico-controlado-por-ros-2"><strong>BRAZO ROBÓTICO CONTROLADO POR ROS 2</strong></h2>
+<h1 id="11-introduccion">1.1. Introducción</h1>
+<p style="text-align: justify;"> 
+Un brazo robótico SCARA 4 DOF es un tipo de robot industrial utilizado para la automatización de procesos y la fabricación de artefactos. Esta máquina será controlada por una plataforma de código llamada ROS 2 que es una herramienta de desarrollo de software empleada en la robótica
+
+</p style="text-align: justify;">
+
+<h1 id="12-descripcion-del-proyecto">1.2. Descripción del proyecto</h1>
+<p style="text-align: justify;"> 
+Este documento explora las posibilidades de trabajar con un marco de robótica, concretamente ROS 2, para interconectar diversas posibilidades en este complejo ámbito. ROS 2 ofrece facilidad para conectar sistemas de detección y actuación, facilitando el procesamiento de datos para una mejor toma de decisiones y acelerando los procesos. La segunda versión de ROS 2 es la preferida, ya que recibirá los comentarios de los creadores, lo que la convertirá en el futuro del sector. ROS 2 también ofrece descentralización, permitiendo que múltiples nodos con la misma importancia trabajen juntos. Para sumergirse mejor en ROS, es esencial trabajar con un modelo físico, incluidos los microcontroladores y la visión robótica, utilizando el robot industrial que se encuentra en la Universidad EAFIT bloque 19 planta 2.
+</p style="text-align: justify;">
+
+<p><img alt="" src="img/brazo.png" /></p>
+<h1 id="13-objetivos-de-proyecto">1.3. Objetivos de proyecto</h1>
+<p style="text-align: justify;"> 
+-       Simular el robot industrial encontrado en el segundo piso del bloque 19 de la Universidad en el ambiente de simulación Gazebo 2. <br> 
+-       Tener un modelo preciso con respecto al original para tener una simulación concreta del robot.<br> 
+-       Crear las diferentes poses necesarias para tener un proceso industrial en la mesa de trabajo utilizando una máquina de estados finitos (MEF). <br> 
+-       Implementar la visión robótica en el equipo para mejorar la precisión del proceso. <br> 
+</p style="text-align: justify;">
+
+<h1 id="14-etapas-del-proyecto">1.4. Etapas del proyecto</h1>
+<p style="text-align: justify;"> 
+-       Proceso de modelado y simulación. <br>
+-       Caracterización del robot SCARA. <br>
+-       Conexión con ROS y Arduino. <br>
+-       Visión robótica para procesos complejos. <br>
+</p style="text-align: justify;">
+
+<h1 id="requisitos-principales-del-proyecto">Requisitos principales del proyecto</h1>
+<p style="text-align: justify;"> 
+- Se requieren conocimientos básicos de _ROS 2_. <br>
+- Herramientas de visualización gráfica como: _gazebo, rviz, moveit, entre otras. <br> <br>
+
+En el presente documento se encuentra la bitácora con todos los pasos para lograr el objetivo del proyecto, el repositorio de _github_ se encuentra a continuación:
+</p style="text-align: justify;">
+
+<p><a href="https://github.com/semillero-ares/ros2_scara.git">Repositorio Github</a> </p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="Comunicaci%C3%B3n%20serial/" class="btn btn-neutral float-right" title="Comunicación serial">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="1-0-Ros2%20installation/" class="btn btn-neutral float-right" title="1. Ros2 Installation for Ubuntu">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -126,7 +181,7 @@ docs/
     
     
     
-      <span><a href="Comunicaci%C3%B3n%20serial/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="1-0-Ros2%20installation/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
@@ -148,5 +203,5 @@ docs/
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2023-10-31 18:19:00.670537+00:00
+Build Date UTC : 2023-11-06 00:05:02.221509+00:00
 -->
